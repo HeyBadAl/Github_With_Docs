@@ -13,6 +13,16 @@ jobs:
       - run: npm install -g bats
       - run: bats -v
       
+      - name: Cach node-modules
+        uses: actions/cache@v3 
+        env: 
+          cache-name: cache-node-examples
+        with: 
+          path: ~/.npm 
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os}}-build-${{ env.cache-name}}-
+
   example-jobs:
     runs-on: ubuntu-latest
     name: Save output
@@ -25,3 +35,5 @@ jobs:
         with:
           name: output-log-file
           path: output.log
+
+      
