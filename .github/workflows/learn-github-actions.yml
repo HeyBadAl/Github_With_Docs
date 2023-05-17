@@ -12,3 +12,16 @@ jobs:
 
       - run: npm install -g bats
       - run: bats -v
+      
+  example-jobs:
+    runs-on: ubuntu-latest
+    name: Save output
+    steps:
+      - shell: bash 
+        run: | 
+          expr 1 + 1 > output.log
+      - name: Upload output file
+        uses: actions/upload-artifacts@v3 
+        with:
+          name: output-log-file
+          path: output.log
